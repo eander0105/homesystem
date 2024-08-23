@@ -1,7 +1,7 @@
 package handlers
 
 import (
-    // "log"
+    "log"
     "net/http"
     "encoding/json"
     "golang.org/x/crypto/bcrypt"
@@ -16,6 +16,7 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
         Password string `json:"password"`
     }
 
+    log.Println("RegisterUserHandler")
     // Decode the request
     if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
         http.Error(w, "Invalid request", http.StatusBadRequest)
@@ -24,7 +25,9 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
 
     // Check for errors in the request
     if req.Name == "" || req.Email == "" || req.Password == "" {
+        log.Println("All fields are required")
         http.Error(w, "All fields are required", http.StatusBadRequest)
+        return
     }
 
     // Check if email is already registered

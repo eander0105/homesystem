@@ -1,1 +1,12 @@
-pb_data
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Go build artifacts
+backend/bin/
+backend/build/
+
+# Environment variables file
+backend/.env
+
+# Temporary files
+backend/tmp/*

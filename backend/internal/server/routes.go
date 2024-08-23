@@ -5,6 +5,7 @@ import (
     "net/http"
     "errors"
     "backend/internal/handlers" // Import your handlers
+    "log"
 )
 
 // SetupRoutes configures the application's routes
@@ -27,5 +28,6 @@ func errorHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
+    log.Println("HelloHandler")
     w.Write([]byte("Hello, World!"))
 }

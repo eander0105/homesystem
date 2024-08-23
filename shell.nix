@@ -6,7 +6,7 @@ pkgs.mkShell {
     docker-compose
     docker
     git
-    # postman
+    hoppscotch
 
     # Backend dependencies
     go
