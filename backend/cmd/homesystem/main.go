@@ -4,6 +4,7 @@ import (
     "log"
     "backend/internal/server"
     "backend/internal/database"
+    "backend/internal/models"
 )
 
 func main() {
@@ -16,7 +17,7 @@ func main() {
     }
 
     // Auto-migrate the database
-    err = database.DB.AutoMigrate(&database.User{},)
+    err = database.DB.AutoMigrate(&models.User{}, &models.UserSession{})
     if err != nil {
         log.Fatalf("Failed to migrate the database: %v", err)
     }

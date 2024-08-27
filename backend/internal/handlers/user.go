@@ -1,11 +1,13 @@
 package handlers
 
 import (
-    "log"
+    // "log"
     "net/http"
     "encoding/json"
     "golang.org/x/crypto/bcrypt"
     "backend/internal/database"
+    "backend/internal/models"
+    "backend/internal/errors"
 )
 
 // RegisterUser registers a new user
@@ -16,30 +18,18 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
         Password string `json:"password"`
     }
 
-    log.Println("RegisterUserHandler")
     // Decode the request
     if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-        http.Error(w, "Invalid request", http.StatusBadRequest)
-        return
-    }
-
-    // Check for errors in the request
-    if req.Name == "" || req.Email == "" || req.Password == "" {
-        log.Println("All fields are required")
-        http.Error(w, "All fields are required", http.StatusBadRequest)
+        errors.InvalidRequestError(w)
         return
     }
 
     // Check if email is already registered
-    var existingUser database.User
+    var existingUser models.User
     if err := database.DB.Where("email = ?", req.Email).First(&existingUser).Error; err == nil {
-        http.Error(w, "Email already registered", http.StatusBadRequest)
+        errors.BadRequestError(w, "Email already registered")
         return
     }
-    // if database.DB.find($database.User{}, "email = ?", req.Email) {
-    //     http.Error(w, "Email already registered", http.StatusBadRequest)
-    //     return
-    // }
 
     // Hash the password
     hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
@@ -49,7 +39,7 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
     }
 
     // Create the user
-    user := database.User{
+    user := models.User{
         Name:     req.Name,
         Email:    req.Email,
         Password: string(hashedPassword),
