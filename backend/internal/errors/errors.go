@@ -1,6 +1,7 @@
 package errors
 
 import (
+    // "log"
     "net/http"
 )
 
@@ -25,7 +26,8 @@ func InvalidRequestError(w http.ResponseWriter) {
     sendError(w, err)
 }
 
-func InternalServerError(w http.ResponseWriter) {
+func InternalServerError(w http.ResponseWriter, inErr error) {
+    // log.Fatal(inErr)
     err := newError("Internal server error", http.StatusInternalServerError)
     sendError(w, err)
 }

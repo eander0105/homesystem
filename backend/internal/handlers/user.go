@@ -4,10 +4,9 @@ import (
     // "log"
     "net/http"
     "encoding/json"
-    "golang.org/x/crypto/bcrypt"
     "backend/internal/database"
     "backend/internal/models"
-    "backend/internal/errors"
+    e "backend/internal/errors"
 )
 
 // RegisterUser registers a new user
@@ -20,21 +19,15 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
 
     // Decode the request
     if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-        errors.InvalidRequestError(w)
+        e.InvalidRequestError(w)
         return
     }
 
     // Check if email is already registered
+    // TODO: this seems to cast an error when not finding user (intended)
     var existingUser models.User
     if err := database.DB.Where("email = ?", req.Email).First(&existingUser).Error; err == nil {
-        errors.BadRequestError(w, "Email already registered")
-        return
-    }
-
-    // Hash the password
-    hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
-    if err != nil {
-        http.Error(w, "Failed to hash password", http.StatusInternalServerError)
+        e.BadRequestError(w, "Email already registered")
         return
     }
 
@@ -42,12 +35,18 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
     user := models.User{
         Name:     req.Name,
         Email:    req.Email,
-        Password: string(hashedPassword),
+        Password: "",
+    }
+
+    // Hash the password
+    if err := user.HashPassword(req.Password); err != nil {
+        e.InternalServerError(w, err)
+        return
     }
 
     // Save the user
     if err := database.DB.Create(&user).Error; err != nil {
-        http.Error(w, "Failed to save user", http.StatusInternalServerError)
+        e.InternalServerError(w, err)
         return
     }
 
@@ -55,5 +54,32 @@ func RegisterUserHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func LoginUserHandler(w http.ResponseWriter, r *http.Request) {
-    // Login user
+    var req struct {
+        Email    string `json:"email"`
+        Password string `json:"password"`
+    }
+
+    // Decode the request
+    if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+        e.InvalidRequestError(w)
+        return
+    }
+
+    // Find user
+    var user models.User
+    if err := database.DB.Where("email = ?", req.Email).First(&user).Error; err != nil {
+        e.BadRequestError(w, "User not found")
+        return
+    }
+
+    // Check password
+    if err := user.CheckPassword(req.Password); err != nil {
+        e.BadRequestError(w, "Invalid password")
+        return
+    }
+
+    // Create session
+    session := models.UserSession{
+        UserID: user.ID,
+    }
 }
