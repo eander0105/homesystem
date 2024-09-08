@@ -1,22 +1,25 @@
 <script lang="ts">
-import { user, pb } from './pocketbase'
+
+import api from '../lib/utils/api';
 
 let username: string
 let password: string
 
 async function login() {
     console.log('login', username, password);
-    pb.collection('users').authWithPassword(username, password);
+    api.get('/hello').then((res: any) => {
+        console.log(res);
+    });
 }
 async function logout() {
     console.log('logout');
-    pb.authStore.clear();
+    // pb.authStore.clear();
 }
 
 </script>
 
-{#if $user}
-    <span>User logged in: {$user.username}</span>
+{#if false}
+    <span>User logged in: </span>
     <br>
     <button on:click={logout}>Logout</button>   
 {:else}
