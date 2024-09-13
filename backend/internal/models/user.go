@@ -26,14 +26,6 @@ func (user *User) CheckPassword(password string) error {
     return bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 }
 
-func (user *User) CreateSesssion() () UserSession {
-    // session := UserSession{
-    //     UserID: user.ID,
-    // }
-    // database.DB.Create(&session)
-    // return session
-}
-
 // UserSession represents a user session in the database
 type UserSession struct {
     ID        uint
@@ -43,6 +35,14 @@ type UserSession struct {
     Token     string `gorm:"unique"`
     ExpiresAt int64
 }
+
+// func (user *User) CreateSesssion() () UserSession {
+    // session := UserSession{
+    //     UserID: user.ID,
+    // }
+    // database.DB.Create(&session)
+    // return session
+// }
 
 func (session *UserSession) beforeCreate(tx *gorm.DB) (err error) {
     // session.ID = generateID() // Generate a unique ID or incrementing id

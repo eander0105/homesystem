@@ -1,7 +1,7 @@
 package handlers
 
 import (
-    // "log"
+    "log"
     "net/http"
     "encoding/json"
     "backend/internal/database"
@@ -82,4 +82,6 @@ func LoginUserHandler(w http.ResponseWriter, r *http.Request) {
     session := models.UserSession{
         UserID: user.ID,
     }
+
+    log.Println(session)
 }

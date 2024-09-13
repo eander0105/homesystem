@@ -21,7 +21,7 @@ async function logout() {
 {#if false}
     <span>User logged in: </span>
     <br>
-    <button on:click={logout}>Logout</button>   
+    <button on:click={logout}>Logout</button>
 {:else}
     <form on:submit|preventDefault>
         <input

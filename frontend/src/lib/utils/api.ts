@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3011'; // Can use an env variable
+const BASE_URL = 'http://localhost:3011';
 
 type QueryParams = Record<string, string | number | boolean | undefined>;
 
@@ -36,6 +36,7 @@ async function request(method: string, endpoint: string, data?: any, queryParams
 }
 
 async function get<T = any>(endpoint: string, queryParams?: QueryParams): Promise<T> {
+    console.log('GET', endpoint, queryParams);
     return request('GET', endpoint, undefined, queryParams);
 }
 
