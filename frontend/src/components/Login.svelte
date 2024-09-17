@@ -11,6 +11,7 @@ async function login() {
         console.log(res);
     });
 }
+
 async function logout() {
     console.log('logout');
     // pb.authStore.clear();

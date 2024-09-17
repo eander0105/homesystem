@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3011';
+const BASE_URL = 'http://localhost:8080';
 
 type QueryParams = Record<string, string | number | boolean | undefined>;
 
