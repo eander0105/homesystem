@@ -5,14 +5,12 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
       - "5173:5173"
     volumes:
       - ./frontend:/app
-    command:
-      - sh -c "cd app && npm run dev"
-    # depends_on:
-    #   - backend
+    command: npm run dev
 
   # backend:
   #   build:
