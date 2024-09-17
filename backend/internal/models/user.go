@@ -36,7 +36,7 @@ type UserSession struct {
     ExpiresAt int64
 }
 
-// func (user *User) CreateSesssion() () UserSession {
+// func (user *User) CreateSession() () UserSession {
     // session := UserSession{
     //     UserID: user.ID,
     // }

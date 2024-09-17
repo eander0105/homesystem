@@ -16,16 +16,16 @@ func NewServer() *http.Server {
         AllowedOrigins: []string{"http://localhost:5173"},
         AllowCredentials: true
     })
-    
+
     // Add middleware
     r.Use(Middleware)
     
     SetupRoutes(r)
     handler := c.Handler(r)
-    
+
     // Create a new HTTP server
     srv := &http.Server{
-        Addr: ":3011",
+        Addr: ":8080",
         Handler: handler,
     }
 

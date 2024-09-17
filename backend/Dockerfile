@@ -1,22 +1,15 @@
-# Step 1: Build the Go application
-FROM golang:1.20-alpine AS build
+FROM golang:latest
 
 WORKDIR /app
 
-COPY go.mod go.sum ./
+COPY go.mod ./
+
 RUN go mod download
 
 COPY . .
 
-RUN go build -o main .
-
-# Step 2: Run the Go application
-FROM alpine:latest
-
-WORKDIR /root/
-
-COPY --from=build /app/main .
+RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
 
 EXPOSE 8080
 
-CMD ["./main"]
+CMD ["air", "-c", ".air.toml"]

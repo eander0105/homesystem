@@ -10,7 +10,7 @@ import (
 func main() {
     srv := server.NewServer() // Initialize the server
 
-    dsn := "user=user password=password dbname=mydb host=localhost port=5432 sslmode=disable"
+    dsn := "user=user password=password dbname=mydb host=postgres port=5432 sslmode=disable"
     err := database.InitDB(dsn)
     if err != nil {
         log.Fatalf("Failed to initialize database: %v", err)
@@ -22,7 +22,7 @@ func main() {
         log.Fatalf("Failed to migrate the database: %v", err)
     }
 
-    log.Println("Starting server on :3011")
+    log.Println("Starting server")
     if err := srv.ListenAndServe(); err != nil {
         log.Fatalf("Server failed to start: %v", err)
     }
