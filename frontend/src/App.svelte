@@ -1,5 +1,6 @@
-<script lang="ts">
-  import Login from './components/Login.svelte'
+<script>
+    import "./app.css";
+    import Login from './components/Login.svelte'
 </script>
 
-<Login />
+<Login></Login>

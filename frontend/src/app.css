@@ -1,4 +1,9 @@
-:root {
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -11,10 +16,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} */
 
 
-body {
+/* body {
   margin: 0;
   display: flex;
   place-items: center;
@@ -30,7 +35,7 @@ h1 {
 .card {
   padding: 2em;
 }
-
+*/
 #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -38,7 +43,7 @@ h1 {
   text-align: center;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -49,4 +54,4 @@ h1 {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
