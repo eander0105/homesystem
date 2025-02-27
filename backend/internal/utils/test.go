@@ -1,9 +1,9 @@
 package utils
 
 import (
-    "log"
+	"log"
 )
 
 func PrintMessage(message string) {
-    log.Println(message)
+	log.Println(message)
 }

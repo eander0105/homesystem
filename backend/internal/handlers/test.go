@@ -1,9 +1,9 @@
 package handlers
 
 import (
-    "fmt"
+	"fmt"
 )
 
 func HelloHandler() {
-    fmt.Println("Hello, World2!")
+	fmt.Println("Hello, World2!")
 }

@@ -52,7 +52,7 @@ async function logout() {
         <!-- Sign in form -->
         <form on:submit|preventDefault>
             <Heading class="mb-6" tag="h3">Sign in</Heading>
-            <Input id="username" class="mb-4" type="text" placeholder="Username" required bind:value={username} />
+            <Input id="email" class="mb-4" type="text" placeholder="Email" required bind:value={email} />
             <div class="mb-6">
                 <Input id="show-password" type={showPassword ? 'text' : 'password'} placeholder="Password" >
                     <button slot="right" on:click={() => (showPassword = !showPassword)} class="pointer-events-auto">
@@ -89,6 +89,6 @@ async function logout() {
                 <Helper class="h-0" color="red">{singupError}</Helper>
             {/if}
         </form>
-        <Helper class="mt-6 text-left">Already have an account? <A on:click={() => signIn = true}>Sign up</A></Helper>
+        <Helper class="mt-6 text-left">Already have an account? <A on:click={() => signIn = true}>Sign in</A></Helper>
     {/if}
 </Card>
